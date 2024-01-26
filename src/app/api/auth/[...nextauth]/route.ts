@@ -12,7 +12,11 @@ export const authOptions: NextAuthOptions = {
       clientSecret: GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  callbacks: {},
+  callbacks: {
+    async session({ session, token, user }) {
+      return { session, user, token };
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

@@ -14,7 +14,7 @@ export async function testApi(session) {
       },
       body: JSON.stringify(request),
     });
-    console.log(res);
+    //console.log(res);
 
     if (res.ok) {
       console.log(res);

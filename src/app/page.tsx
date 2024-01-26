@@ -9,8 +9,8 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  console.log("MAIN");
-  console.log(session);
+  //console.log("MAIN");
+  console.log(session.token);
 
   console.log(cookies().get("JSESSIONID"));
 
