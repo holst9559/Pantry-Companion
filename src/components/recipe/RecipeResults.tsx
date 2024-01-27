@@ -6,6 +6,7 @@ import RecipeCard from "./RecipeCard";
 import { recipes } from "@/services/testResponse";
 import RecipeFilter from "./RecipeFilter";
 import useSWR from "swr";
+import { getAllRecipes } from "@/services/api";
 
 type RecipeResultsProps = {
   ingredients: Ingredient[];
@@ -22,12 +23,10 @@ const RecipeResults: FC<RecipeResultsProps> = ({
     useState<Ingredient[]>(ingredients);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>();
 
-  useEffect(() => {
-    //Uncomment once api fetch works
-    //const { recipes } = useSWR(`http://localhost:8080/api/v1/recipes/search?value=${}`, fetch);
-    //setFilteredRecipes(recipes);
-    //setSelectedIngredients(pantryIngredients);
-  }, []);
+  const handleSubmit = async () => {
+    const payload = await getAllRecipes();
+    console.log(payload);
+  };
 
   return (
     <div>
@@ -36,6 +35,11 @@ const RecipeResults: FC<RecipeResultsProps> = ({
         selectedIngredients={selectedIngredients}
         setSelectedIngredients={setSelectedIngredients}
       />
+      <button
+        className="my-4 mx-auto py-2 px-4 rounded-xl bg-selected text-white"
+        onClick={() => handleSubmit()}>
+        Find recipes
+      </button>
       <section>
         <ul className="flex gap-4 justify-center mt-2">
           {filteredRecipes?.map((recipe) => (

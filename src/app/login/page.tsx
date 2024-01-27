@@ -1,13 +1,15 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, use, useState } from "react";
 import { FormEvent } from "react";
 import { logIn } from "@/services/api";
-import RegisterModal from "./RegisterModal";
+import RegisterModal from "@/components/RegisterModal";
+import { useRouter } from "next/navigation";
 
-export default SignIn() {
+export default function SignIn() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showModal, setShowModal] = useState<Boolean>(false);
+  const router = useRouter();
 
   const handleSubmit = async (
     ev: FormEvent<HTMLFormElement>
@@ -17,6 +19,8 @@ export default SignIn() {
     try {
       const data = await logIn({ email, password });
       console.log(data);
+
+      router.push("/homepage");
     } catch (error) {
       throw new Error("Could not log in");
     }
@@ -66,4 +70,4 @@ export default SignIn() {
       </section>
     </>
   );
-};
+}

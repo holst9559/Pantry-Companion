@@ -1,5 +1,6 @@
 import axios from "axios";
 import { LoginCredentials, RegisterCredentials } from "@/utils/types";
+import { cookies } from "next/headers";
 
 export async function logIn(user: LoginCredentials): Promise<Boolean> {
   try {
@@ -12,7 +13,11 @@ export async function logIn(user: LoginCredentials): Promise<Boolean> {
     });
 
     if (res.ok) {
-      console.log(res);
+      const { token } = await res.json();
+      console.log("TOKEN");
+      console.log(token);
+      document.cookie = `token=${token}; path=/`;
+      localStorage.setItem("token", token);
       return true;
     } else {
       throw new Error("Login failed");
@@ -44,8 +49,15 @@ export async function register(user: RegisterCredentials): Promise<Boolean> {
 }
 
 export async function getAllRecipes() {
+  const token = localStorage.getItem("token");
   const res = await fetch("http://localhost:8080/api/v1/recipes", {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
   });
+  //const data = await res.json();
+
   console.log(res);
 }
