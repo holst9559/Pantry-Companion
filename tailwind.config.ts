@@ -22,7 +22,7 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#F1F1F1",
+        background: "#F7F6F3",
         container: "#FFFFFF",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -56,6 +56,8 @@ const config = {
       },
       backgroundColor: {
         selected: "#3C4E74",
+        background: "#F7F6F3",
+        container: "#FFFFFF",
       },
       borderRadius: {
         lg: "var(--radius)",

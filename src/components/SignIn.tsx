@@ -17,8 +17,6 @@ const SignIn: FC = ({}) => {
     try {
       await logIn({ email, password });
     } catch (error) {}
-
-    console.log(event);
   };
 
   return (
