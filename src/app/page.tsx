@@ -2,28 +2,27 @@ import { cookies } from "next/headers";
 import Header from "@/components/Header";
 import RecipeResults from "@/components/recipe/RecipeResults";
 
-import { GoogleSignInButton } from "@/components/GoogleSignInButton";
-import { getAllRecipes, testApi, testApiGet } from "@/services/api";
+import { getAllRecipes } from "@/services/api";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import RecipeFilter from "@/components/recipe/RecipeFilter";
 import { Ingredient } from "@/utils/types";
+import Footer from "@/components/Footer";
+import SignIn from "@/components/SignIn";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
   //const ingredients: Ingredient[] = await getIngredients();
-  if (session) {
-    const testing = await testApi(session);
-    //const getTesting = await testApiGet(session);
-
-    //console.log(recipes);
-  }
+  //if (session) {
+  //const getTesting = await testApiGet(session);
+  //console.log(recipes);
+  //}
+  const session: Boolean = false;
 
   const ingredients: Ingredient[] = [
-    { id: 1, name: "Flour" },
-    { id: 2, name: "Eggs" },
-    { id: 3, name: "Chicken" },
+    { id: 1, name: "Chicken Breast" },
+    { id: 2, name: "Panko" },
+    { id: 3, name: "Curry" },
+    { id: 4, name: "Tofu" },
+    { id: 5, name: "Beef" },
   ];
 
   return (
@@ -31,11 +30,12 @@ export default async function Home() {
       <Header />
       {!session && (
         <div>
-          <GoogleSignInButton />
+          <SignIn />
         </div>
       )}
 
       {session && <RecipeResults session={session} ingredients={ingredients} />}
+      <Footer />
     </main>
   );
 }

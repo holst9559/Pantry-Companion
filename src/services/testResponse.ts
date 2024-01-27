@@ -84,6 +84,14 @@ const testIngredient2: Ingredient = {
   id: 2,
   name: "Panko",
 };
+const testIngredient3: Ingredient = {
+  id: 3,
+  name: "Curry",
+};
+const testIngredient4: Ingredient = {
+  id: 4,
+  name: "Tofu",
+};
 
 const testRecipeIngredient: RecipeIngredient = {
   id: 1,
@@ -107,6 +115,28 @@ const testRecipeIngredient2: RecipeIngredient = {
   amount: 20,
 };
 
+const testRecipeIngredient3: RecipeIngredient = {
+  id: 3,
+  recipes: [],
+  ingredient: testIngredient3,
+  unit: {
+    id: 1,
+    name: "gram",
+  },
+  amount: 30,
+};
+
+const testRecipeIngredient4: RecipeIngredient = {
+  id: 4,
+  recipes: [],
+  ingredient: testIngredient4,
+  unit: {
+    id: 1,
+    name: "gram",
+  },
+  amount: 150,
+};
+
 const testInstruction: Instruction = {
   id: 1,
   recipe: testRecipe,
@@ -126,4 +156,10 @@ testRecipeIngredient.recipes.push(testRecipe);
 testRecipeIngredient2.recipes.push(testRecipe);
 testRecipe.instructions.push(testInstruction, testInstruction2);
 testRecipe.recipeIngredients.push(testRecipeIngredient, testRecipeIngredient2);
+testRecipeIngredient3.recipes.push(testRecipe2);
+testRecipeIngredient4.recipes.push(testRecipe2);
+testRecipe2.recipeIngredients.push(
+  testRecipeIngredient3,
+  testRecipeIngredient4
+);
 recipes.push(testRecipe, testRecipe2);

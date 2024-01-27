@@ -56,7 +56,6 @@ const config = {
       },
       backgroundColor: {
         selected: "#3C4E74",
-        available: "#485460",
       },
       borderRadius: {
         lg: "var(--radius)",

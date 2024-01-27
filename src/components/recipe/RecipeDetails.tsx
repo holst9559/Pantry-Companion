@@ -7,7 +7,7 @@ type RecipeDetailsProp = {
   recipeDetails: Recipe;
 };
 
-const RecipeDetails: FC<RecipeDetailsProp> = ({ recipeDetails }) => {
+const RecipeDetails: FC<RecipeDetailsProp> = async ({ recipeDetails }) => {
   return (
     <>
       <Header />

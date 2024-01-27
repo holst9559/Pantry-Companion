@@ -2,7 +2,6 @@ import { Ingredient } from "@/utils/types";
 import { FC } from "react";
 
 type IngredientProps = {
-  state: string;
   ingredientId: number;
   ingredientName: string;
   onChange: (change: string) => void;
@@ -10,20 +9,22 @@ type IngredientProps = {
 };
 
 const IngredientComponent: FC<IngredientProps> = ({
-  state,
   ingredientId,
   ingredientName,
   onChange,
 }) => {
   return (
     <li
-      className={`bg-${state.toString()} text-black font-semibold p-2 rounded-full`}
+      className="bg-selected text-black font-semibold p-1 rounded-full"
       key={ingredientId}
-      id={ingredientId.toString()}
-      onClick={(e) => {
-        onChange((e.target as HTMLInputElement).id);
-      }}>
-      {ingredientName}
+      id={ingredientId.toString()}>
+      <p
+        className="text-center"
+        onClick={(e) => {
+          onChange((e.target as HTMLInputElement).id);
+        }}>
+        {ingredientName}
+      </p>
     </li>
   );
 };
