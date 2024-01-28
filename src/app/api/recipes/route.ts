@@ -1,11 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  console.log("GET FUNCTION");
   const token = cookies().get("JWT-TOKEN");
-  console.log(token);
-
   try {
     const res = await fetch("http://localhost:8080/api/v1/recipes", {
       method: "GET",

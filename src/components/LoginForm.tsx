@@ -3,8 +3,6 @@ import { FC, useState } from "react";
 import { FormEvent } from "react";
 import { logIn } from "@/services/api";
 import RegisterModal from "./RegisterModal";
-import { LoginCredentials } from "@/utils/types";
-import { cookies } from "next/headers";
 
 const LoginForm: FC = () => {
   const [email, setEmail] = useState<string>("");

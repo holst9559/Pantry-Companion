@@ -28,7 +28,7 @@ const Footer: FC = () => {
                 src={recipes_icon}
                 width={48}
                 height={48}
-                alt="Navigate to homepage"
+                alt="Navigate to recipes"
               />
             </Link>
           </li>
@@ -38,7 +38,7 @@ const Footer: FC = () => {
                 src={add_icon}
                 width={48}
                 height={48}
-                alt="Navigate to homepage"
+                alt="Navigate to create new recipe"
               />
             </Link>
           </li>
@@ -48,7 +48,7 @@ const Footer: FC = () => {
                 src={user_icon}
                 width={48}
                 height={48}
-                alt="Navigate to homepage"
+                alt="Navigate to pantry"
               />
             </Link>
           </li>
@@ -58,7 +58,7 @@ const Footer: FC = () => {
                 src={settings_icon}
                 width={48}
                 height={48}
-                alt="Navigate to homepage"
+                alt="Navigate to settings"
               />
             </Link>
           </li>

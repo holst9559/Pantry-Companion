@@ -3,7 +3,7 @@ import { useState, FC, FormEvent, Dispatch, SetStateAction } from "react";
 import { register } from "@/services/api";
 
 interface RegisterModalProps {
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  setShowModal: Dispatch<SetStateAction<Boolean>>;
 }
 
 const RegisterModal: FC<RegisterModalProps> = ({ setShowModal }) => {

@@ -1,40 +1,52 @@
 "use client";
-import { FC, useState } from "react";
-import { Session, Recipe, Ingredient } from "@/utils/types";
+import { FC, useState, useEffect, use } from "react";
+import { Recipe, Ingredient } from "@/utils/types";
 import RecipeCard from "./RecipeCard";
 import RecipeFilter from "./RecipeFilter";
+import { getAllRecipes, getRecipesWithIngredients } from "@/services/api";
+import { recipes } from "@/services/testResponse";
 
 type RecipeResultsProps = {
   ingredients: Ingredient[];
-  session: Session;
   pantryIngredients: Ingredient[];
 };
 
-const RecipeResults: FC<RecipeResultsProps> = ({
-  session,
-  ingredients,
-  pantryIngredients,
-}) => {
-  const [selectedIngredients, setSelectedIngredients] =
-    useState<Ingredient[]>(ingredients);
-  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
+const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
+  const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>(
+    []
+  );
+  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>();
+  const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
 
-  const handleSubmit = async () => {
-    try {
-      const res = await fetch("/api/recipes", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await res.json();
-      setFilteredRecipes(data);
-    } catch (error) {
-      throw new Error("Could not fetch data");
-    }
+  const filterRecipesByIngredients = (
+    recipes: Recipe[],
+    ingredients: Ingredient[]
+  ): Recipe[] => {
+    return recipes.filter((recipe) =>
+      recipe.recipeIngredients.every((recipeIngredient) =>
+        ingredients.some(
+          (ingredient) => ingredient.id === recipeIngredient.ingredient.id
+        )
+      )
+    );
   };
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      const data = await getAllRecipes();
+      setAllRecipes(data);
+      setFilteredRecipes(data);
+    };
+    fetchRecipes();
+  }, []);
+
+  useEffect(() => {
+    const filterTest = filterRecipesByIngredients(
+      allRecipes,
+      selectedIngredients
+    );
+    setFilteredRecipes(filterTest);
+  }, [selectedIngredients]);
 
   return (
     <div>
@@ -44,11 +56,6 @@ const RecipeResults: FC<RecipeResultsProps> = ({
         setSelectedIngredients={setSelectedIngredients}
       />
       <section className="flex flex-col">
-        <button
-          className="justify-center mx-auto py-2 px-4 rounded-xl bg-selected text-white shadow-md shadow-gray-400"
-          onClick={() => handleSubmit()}>
-          Find recipes
-        </button>
         <ul className="flex flex-row gap-4 justify-center mt-4">
           {filteredRecipes?.map((recipe) => (
             <RecipeCard key={recipe.id} recipe={recipe}></RecipeCard>

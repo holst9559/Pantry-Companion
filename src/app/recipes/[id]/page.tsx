@@ -1,6 +1,7 @@
-import { FC } from "react";
 import { recipes } from "@/services/testResponse";
 import RecipeDetails from "@/components/recipe/RecipeDetails";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 type RecipeDetailsPageProps = {
   params: { id: number };
@@ -11,7 +12,11 @@ export default async function RecipeDetailsPage({
 }: {
   params: { id: string };
 }) {
-  //const recipe = await getRecipe(params.id);
+  const jwt = cookies().get("JWT-TOKEN")?.value;
+
+  if (!jwt) {
+    redirect("/home");
+  }
   return (
     <>
       <div>
