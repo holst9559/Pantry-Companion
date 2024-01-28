@@ -3,7 +3,11 @@ import { FC, useState, useEffect, use } from "react";
 import { Recipe, Ingredient } from "@/utils/types";
 import RecipeCard from "./RecipeCard";
 import RecipeFilter from "./RecipeFilter";
-import { getAllRecipes, getRecipesWithIngredients } from "@/services/api";
+import {
+  getAllIngredients,
+  getAllRecipes,
+  getRecipesWithIngredients,
+} from "@/services/api";
 import { recipes } from "@/services/testResponse";
 
 type RecipeResultsProps = {
@@ -17,6 +21,7 @@ const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
   );
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>();
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
+  const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
 
   const filterRecipesByIngredients = (
     recipes: Recipe[],
@@ -37,7 +42,13 @@ const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
       setAllRecipes(data);
       setFilteredRecipes(data);
     };
+
+    const fetchIngredients = async () => {
+      const data = await getAllIngredients();
+      setAllIngredients(data);
+    };
     fetchRecipes();
+    fetchIngredients();
   }, []);
 
   useEffect(() => {
@@ -51,7 +62,7 @@ const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
   return (
     <div>
       <RecipeFilter
-        ingredients={ingredients}
+        ingredients={allIngredients}
         selectedIngredients={selectedIngredients}
         setSelectedIngredients={setSelectedIngredients}
       />

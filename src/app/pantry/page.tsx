@@ -6,7 +6,7 @@ export default async function PantryPage() {
   const jwt = cookies().get("JWT-TOKEN")?.value;
 
   if (!jwt) {
-    redirect("/home");
+    redirect("/login");
   }
   return (
     <>

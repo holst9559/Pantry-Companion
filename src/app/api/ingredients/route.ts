@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 export async function GET() {
   const token = cookies().get("JWT-TOKEN");
   try {
-    const res = await fetch("http://localhost:8080/api/v1/recipes", {
+    const res = await fetch("http://localhost:8080/api/v1/ingredients", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -14,7 +14,6 @@ export async function GET() {
 
     if (res.ok) {
       const data = await res.json();
-
       const response = NextResponse.json(data);
 
       return response;
@@ -22,6 +21,6 @@ export async function GET() {
       throw new Error("Could not fetch data");
     }
   } catch (error) {
-    throw new Error("An error occurred while trying to fetch recipes");
+    throw new Error("An error occurred while trying to fetch ingredients");
   }
 }

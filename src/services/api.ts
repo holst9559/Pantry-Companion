@@ -66,7 +66,22 @@ export async function getAllRecipes() {
       "Content-Type": "application/json",
     },
   });
-  console.log(res);
+
+  if (res != null) {
+    const payload = await res.json();
+    return payload;
+  } else {
+    throw new Error("Failed to fetch all recipes");
+  }
+}
+
+export async function getAllIngredients() {
+  const res = await fetch("/api/ingredients", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   if (res != null) {
     const payload = await res.json();

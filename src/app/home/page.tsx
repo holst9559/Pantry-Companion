@@ -9,7 +9,7 @@ export default async function Home() {
   const jwt = cookies().get("JWT-TOKEN")?.value;
 
   if (!jwt) {
-    redirect("/home");
+    redirect("/login");
   }
   const ingredients: Ingredient[] = [
     { id: 1, name: "Chicken Breast" },

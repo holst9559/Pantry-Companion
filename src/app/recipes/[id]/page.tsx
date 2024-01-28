@@ -15,7 +15,7 @@ export default async function RecipeDetailsPage({
   const jwt = cookies().get("JWT-TOKEN")?.value;
 
   if (!jwt) {
-    redirect("/home");
+    redirect("/login");
   }
   return (
     <>

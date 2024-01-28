@@ -7,7 +7,7 @@ export default async function SettingsPage() {
   const jwt = cookies().get("JWT-TOKEN")?.value;
 
   if (!jwt) {
-    redirect("/home");
+    redirect("/login");
   }
   //const recipe = await getRecipe(params.id);
   return (
