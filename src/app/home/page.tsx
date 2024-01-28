@@ -5,7 +5,7 @@ import { Ingredient } from "@/utils/types";
 import { cookies } from "next/headers";
 import { useEffect } from "react";
 
-export default async function HomePage() {
+export default async function Home() {
   const ingredients: Ingredient[] = [
     { id: 1, name: "Chicken Breast" },
     { id: 2, name: "Panko" },
@@ -13,6 +13,8 @@ export default async function HomePage() {
     { id: 4, name: "Tofu" },
     { id: 5, name: "Beef" },
   ];
+
+  const jwt = cookies().get("JWT-TOKEN")?.value;
 
   return (
     <>

@@ -11,15 +11,18 @@ const RecipeCard: FC<RecipeCardProps> = ({ recipe }) => {
   return (
     <Link
       href={"/recipes/" + recipe.id}
-      className="bg-container rounded-lg overflow-hidden shadow-xl relative transition-all hover:-translate-y-1 hover:bg-white hover:bg-opacity-10 w-2/5">
+      className="bg-container rounded-lg overflow-hidden shadow-md shadow-slate-400 relative transition-all hover:-translate-y-1 hover:bg-white hover:bg-opacity-10 w-2/5">
       <li>
-        <Image
-          src={recipe.imgUrl}
-          alt={recipe.title}
-          width={400}
-          height={300}
-          className="w-full h-20 object-cover"
-        />
+        {recipe.imgUrl && (
+          <Image
+            src={recipe.imgUrl}
+            alt={recipe.title}
+            width={400}
+            height={300}
+            className="w-full h-20 object-cover"
+          />
+        )}
+
         <div>
           <h2 className="text-center font-medium">{recipe.title}</h2>
           <p className="text-center">{recipe.totalTime} min</p>

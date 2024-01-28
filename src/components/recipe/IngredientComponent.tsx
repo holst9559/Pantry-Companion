@@ -15,11 +15,11 @@ const IngredientComponent: FC<IngredientProps> = ({
 }) => {
   return (
     <li
-      className="bg-selected text-black font-semibold p-1 rounded-full"
+      className="bg-selected text-white font-semibold text-sm text-center p-2 rounded-full shadow-md shadow-gray-400"
       key={ingredientId}
       id={ingredientId.toString()}>
       <p
-        className="text-center"
+        className=""
         onClick={(e) => {
           onChange((e.target as HTMLInputElement).id);
         }}>

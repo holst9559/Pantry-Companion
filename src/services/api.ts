@@ -1,45 +1,34 @@
 import axios from "axios";
 import { LoginCredentials, RegisterCredentials } from "@/utils/types";
-import { cookies } from "next/headers";
 
-export async function logIn(user: LoginCredentials): Promise<Boolean> {
+export async function logIn(email: string, password: string) {
   try {
-    const res = await fetch("http://localhost:8080/api/v1/auth/login", {
+    const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify({ email, password }),
     });
 
     if (res.ok) {
-      const { token } = await res.json();
-      console.log("TOKEN");
-      console.log(token);
-      document.cookie = `token=${token}; path=/`;
-      localStorage.setItem("token", token);
-      return true;
-    } else {
-      throw new Error("Login failed");
+      window.location.replace("/home");
     }
   } catch (error) {
-    throw new Error("An error occurred while trying to login");
+    throw new Error("Could not log in");
   }
 }
 
 export async function register(user: RegisterCredentials): Promise<Boolean> {
   try {
-    const res = await fetch("http://localhost:8080/api/v1/auth/register", {
+    const res = await fetch("/api/auth/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(user),
     });
 
-    if (res.ok) {
-      console.log(res);
-      return true;
+    if (res != null) {
+      const payload = await res.json();
+      return payload;
     } else {
       throw new Error("User registration failed");
     }
@@ -49,12 +38,11 @@ export async function register(user: RegisterCredentials): Promise<Boolean> {
 }
 
 export async function getAllRecipes() {
-  const token = localStorage.getItem("token");
   const res = await fetch("http://localhost:8080/api/v1/recipes", {
     method: "GET",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${token}`,
     },
   });
   //const data = await res.json();

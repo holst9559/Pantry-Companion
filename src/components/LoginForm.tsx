@@ -3,8 +3,10 @@ import { FC, useState } from "react";
 import { FormEvent } from "react";
 import { logIn } from "@/services/api";
 import RegisterModal from "./RegisterModal";
+import { LoginCredentials } from "@/utils/types";
+import { cookies } from "next/headers";
 
-export default SignIn() {
+const LoginForm: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showModal, setShowModal] = useState<Boolean>(false);
@@ -13,24 +15,19 @@ export default SignIn() {
     ev: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     ev.preventDefault();
-
-    try {
-      const data = await logIn({ email, password });
-      console.log(data);
-    } catch (error) {
-      throw new Error("Could not log in");
-    }
+    await logIn(email, password);
   };
 
   return (
     <>
-      <section className="bg-container shadow-xl h-fill mx-4 rounded-lg">
+      <section className="bg-container shadow-md shadow-slate-400 h-fill mx-4 rounded-lg mt-10">
         <form className="flex flex-col p-2" onSubmit={handleSubmit}>
           <label className="block text-gray-700 font-medium mb-2">Email</label>
           <input
-            className="w-full px-4 py-2 bg-slate-200
-            rounded-lg focus:outline-none"
-            type="text"
+            className="w-full px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+            type="email"
+            id="email"
+            placeholder="Enter email adress"
             value={email}
             onChange={(ev: FormEvent<HTMLInputElement>) => {
               setEmail(ev.currentTarget.value);
@@ -39,26 +36,28 @@ export default SignIn() {
             Password
           </label>
           <input
-            className="w-full px-4 py-2 bg-slate-200
-            rounded-lg focus:outline-none"
+            className="w-full px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+            type="password"
+            id="password"
+            placeholder="Enter password"
             value={password}
             onChange={(ev: FormEvent<HTMLInputElement>) => {
               setPassword(ev.currentTarget.value);
             }}></input>
           <button
-            className="my-4 mx-auto py-2 px-4 rounded-xl bg-selected text-white"
+            className="my-4 mx-auto py-2 px-4 rounded-xl bg-selected text-white shadow-md shadow-gray-400"
             type="submit">
             Login
           </button>
         </form>
       </section>
 
-      <section className="flex flex-col bg-container shadow-xl h-fill mx-4 my-8 rounded-lg">
+      <section className="flex flex-col bg-container shadow-md shadow-slate-400 h-fill mx-4 my-8 rounded-lg">
         <h2 className="block text-gray-700 font-medium text-center mt-2 text-lg">
-          Not registered?
+          Don't have an account?
         </h2>
         <button
-          className="my-4 mx-auto py-2 px-4 rounded-xl bg-selected text-white"
+          className="my-4 mx-auto py-2 px-4 rounded-xl bg-selected text-white shadow-md shadow-gray-400"
           onClick={() => setShowModal(true)}>
           Register
         </button>
@@ -67,3 +66,5 @@ export default SignIn() {
     </>
   );
 };
+
+export default LoginForm;

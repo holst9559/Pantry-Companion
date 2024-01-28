@@ -1,6 +1,6 @@
 "use client";
-import { Ingredient, IngredientObject } from "@/utils/types";
-import { Dispatch, FC, useState, useEffect, SetStateAction } from "react";
+import { Ingredient } from "@/utils/types";
+import { Dispatch, FC, SetStateAction } from "react";
 import IngredientComponent from "./IngredientComponent";
 
 type RecipeFilterProps = {
@@ -28,22 +28,23 @@ const RecipeFilter: FC<RecipeFilterProps> = ({
 
   return (
     <>
-      <h2 className="ml-4">Select ingredients</h2>
+      <h2 className="ml-5 text-xl font-semibold">Select ingredients</h2>
       <div className="mb-4 mx-4 h-fill ">
         <section>
           <div>
             <input
               type="search"
               placeholder="Search ingredients"
-              className="w-full h-10 rounded-lg my-2 shadow-xl bg-container p-2"></input>
+              className="w-full h-10 rounded-lg my-2 shadow-md shadow-slate-300 bg-container p-2"></input>
           </div>
 
-          <div className="bg-container w-full h-fill rounded-lg mx-auto shadow-xl p-2">
-            <p className="font-bold text-sm">Filters</p>
-            <ul className="flex gap-3 mt-4">
+          <div className="bg-container w-full h-fill rounded-lg mx-auto shadow-md shadow-slate-400 p-4">
+            <p className="font-bold text-l">Selected ingredients</p>
+            <ul className="flex gap-3 mt-4 flex-row flex-wrap ">
               {sortedItems.map((ingredient) => {
                 return (
                   <IngredientComponent
+                    key={ingredient.id}
                     ingredientId={ingredient.id}
                     ingredientName={ingredient.name}
                     onChange={removeIngredient}
