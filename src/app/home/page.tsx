@@ -1,5 +1,4 @@
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import RecipeResults from "@/components/recipe/RecipeResults";
 import { Ingredient } from "@/utils/types";
 import { cookies } from "next/headers";
@@ -21,7 +20,9 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
+      <header className="p-4 mx-auto text-center">
+        <h1 className="text-2xl font-semibold">Pantry Companion</h1>
+      </header>
       <RecipeResults ingredients={ingredients} />
       <Footer />
     </>

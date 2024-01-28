@@ -1,4 +1,4 @@
-import { Ingredient, RegisterCredentials } from "@/utils/types";
+import { Ingredient, RegisterCredentials, Recipe } from "@/utils/types";
 
 export async function logIn(email: string, password: string) {
   try {
@@ -55,7 +55,7 @@ export async function getRecipesWithIngredients(ingredients: Ingredient[]) {
       throw new Error("Failed to fetch recipes with ingredients array");
     }
   } catch (error) {
-    throw new Error("An error occurred while trying to fetch recipesr");
+    throw new Error("An error occurred while trying to fetch recipes");
   }
 }
 
@@ -88,5 +88,26 @@ export async function getAllIngredients() {
     return payload;
   } else {
     throw new Error("Failed to fetch all recipes");
+  }
+}
+
+export async function addNewRecipe(recipe: Recipe) {
+  try {
+    const res = await fetch("/api/recipes", {
+      method: "POST",
+      headers: {
+        "Content-Tpye": "application/json",
+      },
+      body: JSON.stringify(recipe),
+    });
+
+    if (res != null) {
+      const payload = await res.json();
+      return payload;
+    } else {
+      throw new Error("Failed to create recipe");
+    }
+  } catch (error) {
+    throw new Error("An error occurred while trying to create recipe");
   }
 }

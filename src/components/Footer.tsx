@@ -13,7 +13,7 @@ const Footer: FC = () => {
       <nav>
         <ul className="flex justify-between items-center gap-4 container mx-auto px-4 my-2 max-w-6xl border-b-2 border-white border-opacity-10">
           <li>
-            <Link href="/homepage">
+            <Link href="/home">
               <Image
                 src={home_icon}
                 width={48}

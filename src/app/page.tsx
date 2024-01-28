@@ -1,13 +1,14 @@
 import Header from "@/components/Header";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  return (
-    <main className="bg-background">
-      <Header />
-      <div>
-        <Link href="/login">Login</Link>
-      </div>
-    </main>
-  );
+  const jwt = cookies().get("JWT-TOKEN")?.value;
+
+  if (jwt) {
+    redirect("/home");
+  } else if (!jwt) {
+    redirect("/login");
+  }
 }
