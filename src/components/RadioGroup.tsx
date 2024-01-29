@@ -14,12 +14,13 @@ const RadioGroup: FC<RadioGroupProps> = ({ onChange }) => {
   };
 
   return (
-    <div>
-      <label>
+    <div className="flex mx-auto gap-10 my-4">
+      <label className="font-medium">
         <input
           type="radio"
           name="visibility"
           value="true"
+          className="w-6 h-6 mr-2 top-1 relative"
           defaultChecked={true}
           checked={selectedOption}
           onChange={handleOptionChange}
@@ -31,6 +32,7 @@ const RadioGroup: FC<RadioGroupProps> = ({ onChange }) => {
           type="radio"
           name="visibility"
           value="false"
+          className="w-6 h-6 mr-2 top-1 relative"
           checked={!selectedOption}
           onChange={handleOptionChange}
         />

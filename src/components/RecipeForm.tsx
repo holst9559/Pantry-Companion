@@ -190,12 +190,12 @@ const RecipeForm: FC = () => {
 
   return (
     <div className="">
-      <form className="w-11/12 mx-4 mb-28" onSubmit={handleFormSubmit}>
+      <form className="w-11/12 mx-4 mb-36" onSubmit={handleFormSubmit}>
         <section>
           <div>
             <label htmlFor="title">Title</label>
             <input
-              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none shadow-md shadow-slate-300"
               id="title"
               name="title"
               onChange={(ev: FormEvent<HTMLInputElement>) => {
@@ -208,7 +208,7 @@ const RecipeForm: FC = () => {
           <div>
             <label>Dish</label>
             <input
-              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none shadow-md shadow-slate-300"
               id="dish"
               name="dish"
               onChange={(ev: FormEvent<HTMLInputElement>) => {
@@ -230,7 +230,7 @@ const RecipeForm: FC = () => {
           <div>
             <label>Category</label>
             <input
-              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none shadow-md shadow-slate-300"
               id="category"
               name="category"
               onChange={(ev: FormEvent<HTMLInputElement>) => {
@@ -252,7 +252,7 @@ const RecipeForm: FC = () => {
           <div>
             <label>Servings</label>
             <input
-              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none shadow-md shadow-slate-300"
               id="servings"
               name="servings"
               onChange={(ev: FormEvent<HTMLInputElement>) => {
@@ -265,7 +265,7 @@ const RecipeForm: FC = () => {
           <div>
             <label>Prep Time (min)</label>
             <input
-              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none shadow-md shadow-slate-300"
               id="prep"
               name="prepTime"
               onChange={(ev: FormEvent<HTMLInputElement>) => {
@@ -278,7 +278,7 @@ const RecipeForm: FC = () => {
           <div>
             <label>Cook Time (min)</label>
             <input
-              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none shadow-md shadow-slate-300"
               id="cook"
               name="cookTime"
               onChange={(ev: FormEvent<HTMLInputElement>) => {
@@ -291,7 +291,7 @@ const RecipeForm: FC = () => {
           <div>
             <label>Diet</label>
             <input
-              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+              className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none shadow-md shadow-slate-300"
               id="diet"
               name="diet"
               onChange={(ev: FormEvent<HTMLInputElement>) => {
@@ -313,7 +313,7 @@ const RecipeForm: FC = () => {
           <div>
             <label>Description</label>
             <textarea
-              className="w-full h-24 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
+              className="w-full h-24 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none shadow-md shadow-slate-300"
               id="description"
               name="description"
               onChange={(ev: FormEvent<HTMLTextAreaElement>) => {
@@ -404,7 +404,7 @@ const RecipeForm: FC = () => {
                   height={40}
                   width={40}
                   alt="Add button"
-                  className="w-12 justify-end mr-2"
+                  className="w-12 justify-end mr-2 shadow-md shadow-slate-400 rounded-3xl"
                 />
               </button>
             </div>
@@ -430,7 +430,7 @@ const RecipeForm: FC = () => {
                 {item.step}
               </p>
               <textarea
-                className="w-full flex px-4 py-2 mr-2 bg-slate-200 rounded-lg opacity-80"
+                className="w-full flex px-4 py-2 mr-2 bg-slate-200 rounded-lg opacity-80 shadow-md shadow-slate-300"
                 rows={6}
                 disabled>
                 {item.description}
@@ -441,19 +441,25 @@ const RecipeForm: FC = () => {
                   removeStep(instructions.indexOf(item));
                 }}
                 type="button">
-                <Image src={delete_icon} width={40} height={40} alt="Delete" />
+                <Image
+                  src={delete_icon}
+                  width={40}
+                  height={40}
+                  alt="Delete"
+                  className=" shadow-md"
+                />
               </button>
             </div>
           ))}
 
           <div className="flex flex-row">
-            <p className="px-3 py-1 mr-2 h-8 mt-2 font-bold bg-selected text-white justify-center rounded-md">
+            <p className="px-3 py-1 mr-2 h-8 mt-2 font-bold bg-selected text-white justify-center rounded-md shadow-slate-400">
               {instructions?.length
                 ? (instructions.length + 1).toString()
                 : "1"}
             </p>
             <textarea
-              className="w-full flex px-4 py-2 mr-2 bg-slate-200 rounded-lg "
+              className="w-full flex px-4 py-2 mr-2 bg-slate-200 rounded-lg shadow-md shadow-slate-300"
               id="instruction"
               value={newInstruction?.description}
               onChange={handleInstructionChange}
@@ -468,7 +474,7 @@ const RecipeForm: FC = () => {
                 height={40}
                 width={40}
                 alt="Add button"
-                className="w-12 justify-end mr-2 mt-14"
+                className="w-12 justify-end mr-2 mt-14  shadow-md shadow-slate-400 rounded-3xl"
               />
             </button>
           </div>
@@ -479,8 +485,10 @@ const RecipeForm: FC = () => {
             setNewIngredient={setNewIngredient}
           />
         )}
-        <div>
-          <label>Visibility</label>
+        <div className="flex flex-col mt-4">
+          <label className="flex justify-center text-lg font-medium">
+            Visibility
+          </label>
           <RadioGroup onChange={handleVisibilityChange} />
         </div>
 

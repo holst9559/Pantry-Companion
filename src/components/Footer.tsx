@@ -19,6 +19,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to homepage"
+                className="shadow-md shadow-slate-400"
               />
             </Link>
           </li>
@@ -29,6 +30,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to recipes"
+                className="shadow-md shadow-slate-400"
               />
             </Link>
           </li>
@@ -39,6 +41,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to create new recipe"
+                className="shadow-md shadow-slate-500 rounded-3xl"
               />
             </Link>
           </li>
@@ -49,6 +52,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to pantry"
+                className="shadow-md shadow-slate-400"
               />
             </Link>
           </li>
@@ -59,6 +63,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to settings"
+                className="shadow-md shadow-slate-400"
               />
             </Link>
           </li>

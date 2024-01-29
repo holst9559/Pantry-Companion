@@ -24,7 +24,7 @@ const RecipeDetails: FC<RecipeDetailsProp> = ({ params }) => {
 
   return (
     <>
-      <Header />
+      <Header title={recipeDetails?.title} />
       {recipeDetails && (
         <>
           <Image

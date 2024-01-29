@@ -1,15 +1,9 @@
 "use client";
-import { FC, useState, useEffect, use } from "react";
+import { FC, useState, useEffect } from "react";
 import { Recipe, Ingredient } from "@/utils/types";
 import RecipeCard from "./RecipeCard";
 import RecipeFilter from "./RecipeFilter";
-import {
-  getAllIngredients,
-  getAllRecipes,
-  getRecipesWithIngredients,
-} from "@/services/api";
-import { recipes } from "@/services/testResponse";
-import { fetchDishes } from "@/services/api";
+import { getAllIngredients, getAllRecipes } from "@/services/api";
 
 type RecipeResultsProps = {
   ingredients: Ingredient[];
@@ -30,7 +24,7 @@ const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
     return recipes.filter((recipe) =>
       recipe.recipeIngredients.every((recipeIngredient) =>
         ingredients.some(
-          (ingredient) => ingredient.id === recipeIngredient.ingredient.id
+          (ingredient) => ingredient.name === recipeIngredient.ingredientName
         )
       )
     );
@@ -52,7 +46,10 @@ const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
   }, []);
 
   useEffect(() => {
-    const filterTest = filterRecipesByIngredients(recipes, selectedIngredients);
+    const filterTest = filterRecipesByIngredients(
+      allRecipes,
+      selectedIngredients
+    );
     setFilteredRecipes(filterTest);
   }, [selectedIngredients]);
 
