@@ -36,29 +36,6 @@ export async function register(user: RegisterCredentials): Promise<Boolean> {
   }
 }
 
-//Currently not working, problem with logic in Spring Boot
-export async function getRecipesWithIngredients(ingredients: Ingredient[]) {
-  const stringArray: String[] = ingredients.map(
-    (ingredient) => ingredient.name
-  );
-
-  try {
-    const res = await fetch("/api/recipes/search", {
-      method: "POST",
-      body: JSON.stringify(stringArray),
-    });
-
-    if (res != null) {
-      const payload = await res.json();
-      return payload;
-    } else {
-      throw new Error("Failed to fetch recipes with ingredients array");
-    }
-  } catch (error) {
-    throw new Error("An error occurred while trying to fetch recipes");
-  }
-}
-
 export async function getAllRecipes() {
   const res = await fetch("/api/recipes", {
     method: "GET",
