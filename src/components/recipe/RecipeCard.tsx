@@ -19,13 +19,13 @@ const RecipeCard: FC<RecipeCardProps> = ({ recipe }) => {
             alt={recipe.title}
             width={400}
             height={300}
-            className="w-full h-20 object-cover"
+            className="w-full h-28 object-cover"
           />
         )}
 
         <div>
           <h2 className="text-center font-medium">{recipe.title}</h2>
-          <p className="text-center">{recipe.totalTime} min</p>
+          <p className="text-center">{recipe.prepTime + recipe.cookTime} min</p>
         </div>
       </li>
     </Link>

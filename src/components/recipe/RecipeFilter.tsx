@@ -74,7 +74,7 @@ const RecipeFilter: FC<RecipeFilterProps> = ({
                 onChange={handleInputChange}
                 value={inputValue}
                 list="ingredients"
-                className="w-full h-10 rounded-lg my-2 mr-4 shadow-md shadow-slate-300 bg-container p-2"
+                className="w-full h-10 rounded-lg my-2 mr-4 shadow-md shadow-slate-400 bg-container p-2"
               />
               <datalist id="ingredients">
                 {ingredients.map((item, index) => (
@@ -87,7 +87,7 @@ const RecipeFilter: FC<RecipeFilterProps> = ({
                   width={48}
                   height={48}
                   alt="Submit button"
-                  className="w-8 mr-2"
+                  className="w-8 mr-2 shadow-md shadow-slate-400 rounded-2xl"
                 />
               </button>
             </div>

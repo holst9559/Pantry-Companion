@@ -26,6 +26,21 @@ export type Recipe = {
   diet: Diet;
 };
 
+export type RecipeDto = {
+  title: string;
+  dish: Dish;
+  category: Category;
+  description: string;
+  prepTime: number;
+  cookTime: number;
+  servings: number;
+  visible: boolean;
+  instructions: InstructionDto[];
+  recipeIngredients: RecipeIngredientDto[];
+  imgUrl: string;
+  diet: Diet;
+};
+
 export type User = {
   id: number;
   firstName: string;
@@ -54,11 +69,10 @@ export type Instruction = {
 };
 
 export type RecipeIngredient = {
-  id: number;
-  recipes: Recipe[];
-  ingredient: Ingredient;
-  unit: Unit;
   amount: number;
+  id: number;
+  ingredientName: string;
+  unit: Unit;
 };
 
 export type Ingredient = {
@@ -92,4 +106,21 @@ export type RegisterCredentials = {
   password: string;
   firstName: string;
   lastName: string;
+};
+
+export type IngredientDto = {
+  amount: number;
+  unit: string;
+  ingredient: string;
+};
+
+export type InstructionDto = {
+  step: string;
+  description: string;
+};
+
+export type RecipeIngredientDto = {
+  ingredient: Ingredient;
+  unit: string;
+  amount: number;
 };

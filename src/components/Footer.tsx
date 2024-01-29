@@ -9,16 +9,17 @@ import settings_icon from "../../public/settings_icon.svg";
 
 const Footer: FC = () => {
   return (
-    <footer className="absolute bottom-0 w-screen bg-container">
+    <footer className="fixed bottom-0 w-screen bg-container border-t border-selected ">
       <nav>
         <ul className="flex justify-between items-center gap-4 container mx-auto px-4 my-2 max-w-6xl border-b-2 border-white border-opacity-10">
           <li>
-            <Link href="/homepage">
+            <Link href="/home">
               <Image
                 src={home_icon}
                 width={48}
                 height={48}
                 alt="Navigate to homepage"
+                className="shadow-md shadow-slate-400"
               />
             </Link>
           </li>
@@ -29,6 +30,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to recipes"
+                className="shadow-md shadow-slate-400"
               />
             </Link>
           </li>
@@ -39,6 +41,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to create new recipe"
+                className="shadow-md shadow-slate-500 rounded-3xl"
               />
             </Link>
           </li>
@@ -49,6 +52,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to pantry"
+                className="shadow-md shadow-slate-400"
               />
             </Link>
           </li>
@@ -59,6 +63,7 @@ const Footer: FC = () => {
                 width={48}
                 height={48}
                 alt="Navigate to settings"
+                className="shadow-md shadow-slate-400"
               />
             </Link>
           </li>
