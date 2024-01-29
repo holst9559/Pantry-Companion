@@ -1,4 +1,4 @@
-import { Ingredient, RegisterCredentials, Recipe } from "@/utils/types";
+import { Ingredient, RegisterCredentials, RecipeDto } from "@/utils/types";
 
 export async function logIn(email: string, password: string) {
   try {
@@ -91,7 +91,7 @@ export async function getAllIngredients() {
   }
 }
 
-export async function addNewRecipe(recipe: Recipe) {
+export async function addNewRecipe(recipe: RecipeDto) {
   try {
     const res = await fetch("/api/recipes", {
       method: "POST",
@@ -171,9 +171,51 @@ export async function getNewIngredients(req: string) {
       const data = await res.json();
       return data;
     } else {
-      throw new Error("Failed to fetch one or mroe ingredients");
+      throw new Error("Failed to fetch one or more ingredients");
     }
   } catch (error) {
     throw new Error("An error occurred while trying to fetch ingredients");
+  }
+}
+
+export async function postNewIngredient(req: Ingredient) {
+  try {
+    const res = await fetch("/api/ingredients", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    });
+
+    if (req != null) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw new Error("Failed to post ingredient");
+    }
+  } catch (error) {
+    throw new Error("An error occurred while trying to fetch ingredients");
+  }
+}
+
+export async function getRecipeById(req: string) {
+  try {
+    const res = await fetch("/api/recipes/getby", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    });
+
+    if (req != null) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw new Error("Failed to fetch recipe");
+    }
+  } catch (error) {
+    throw new Error("An error occurred while trying to fetch recipe");
   }
 }

@@ -29,6 +29,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const token = cookies().get("JWT-TOKEN");
+  const payload = await req.json();
 
   if (!token) {
     throw new Error("JWT-TOKEN cookie not found");
@@ -40,12 +41,13 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token?.value}`,
       },
-      body: JSON.stringify(req),
+      body: JSON.stringify(payload),
     });
 
     if (res.ok) {
       const data = await res.json();
-      return NextResponse.json(data);
+      const response = NextResponse.json(data);
+      return response;
     } else {
       throw new Error("Could not create recipe");
     }

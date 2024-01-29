@@ -7,12 +7,12 @@ import {
   FormEvent,
   SetStateAction,
 } from "react";
-import { getNewIngredients } from "@/services/api";
+import { getNewIngredients, postNewIngredient } from "@/services/api";
 import { Ingredient } from "@/utils/types";
 
 type NewIngredientModalProps = {
   setShowModal: Dispatch<SetStateAction<Boolean>>;
-  setNewIngredient: Dispatch<SetStateAction<string>>;
+  setNewIngredient: Dispatch<SetStateAction<Ingredient>>;
 };
 
 const NewIngredientModal: FC<NewIngredientModalProps> = ({
@@ -34,9 +34,11 @@ const NewIngredientModal: FC<NewIngredientModalProps> = ({
     const rightIngredient: Ingredient[] = newIngredients.filter(
       (ingredient) => ingredient.name == newIngredientImport
     );
-    setNewIngredient(rightIngredient[0]);
+    const data = await postNewIngredient(rightIngredient[0]);
+    setNewIngredient(data);
     setIngredientSearch("");
     setNewIngredientImport("");
+
     setShowModal(false);
   };
 

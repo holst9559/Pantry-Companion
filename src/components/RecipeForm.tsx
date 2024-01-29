@@ -1,6 +1,10 @@
 "use client";
-import { FC, useState, useEffect, ChangeEvent } from "react";
-import { fetchRecipeParams, getAllIngredients } from "@/services/api";
+import { FC, useState, useEffect, ChangeEvent, FormEvent } from "react";
+import {
+  addNewRecipe,
+  fetchRecipeParams,
+  getAllIngredients,
+} from "@/services/api";
 import {
   Category,
   Diet,
@@ -9,12 +13,15 @@ import {
   IngredientDto,
   Instruction,
   InstructionDto,
+  RecipeDto,
+  RecipeIngredientDto,
 } from "@/utils/types";
 import Image from "next/image";
 import add_icon from "../../public/add_icon.svg";
 import edit_icon from "../../public/edit_icon.svg";
 import delete_icon from "../../public/delete_icon.svg";
 import NewIngredientModal from "./recipe/NewIngredientModal";
+import RadioGroup from "./RadioGroup";
 
 const RecipeForm: FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -22,19 +29,30 @@ const RecipeForm: FC = () => {
   const [diets, setDiets] = useState<Diet[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [showModal, setShowModal] = useState<Boolean>(false);
-  const [recipeIngredients, setRecipeIngredients] = useState<IngredientDto[]>(
-    []
-  );
 
   const [amountToAdd, setAmountToAdd] = useState<number>();
   const [unitToAdd, setUnitToAdd] = useState<string>();
-  const [ingredientToAdd, setIngredientToAdd] = useState<string>();
+  const [ingredientToAdd, setIngredientToAdd] = useState<Ingredient>();
   const [newIngredient, setNewIngredient] = useState<Ingredient>();
 
-  const [instructions, setInstructions] = useState<InstructionDto[]>([]);
   const [newInstruction, setNewInstruction] = useState<
     InstructionDto | undefined
   >();
+
+  const [formData, setFormData] = useState<RecipeDto>();
+  const [formTitle, setFormTitle] = useState<string>();
+  const [formDish, setFormDish] = useState<Dish>();
+  const [formCategory, setFormCategory] = useState<Category>();
+  const [formServings, setFormServings] = useState<number>();
+  const [formPrepTime, setFormPrepTime] = useState<number>();
+  const [formCookTime, setFormCookTime] = useState<number>();
+  const [formVisible, setFormVisible] = useState<boolean>(true);
+  const [formDiet, setFormDiet] = useState<Diet>();
+  const [formDescription, setFormDescription] = useState<string>();
+  const [recipeIngredients, setRecipeIngredients] = useState<
+    RecipeIngredientDto[]
+  >([]);
+  const [instructions, setInstructions] = useState<InstructionDto[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,20 +81,20 @@ const RecipeForm: FC = () => {
       ingredientToAdd != null &&
       amountToAdd != 0 &&
       unitToAdd != "" &&
-      ingredientToAdd != ""
+      ingredientToAdd.name != ""
     ) {
       setRecipeIngredients((prevRecipeIngredients) => [
         ...prevRecipeIngredients,
-        { amount: amountToAdd, unit: unitToAdd, ingredient: ingredientToAdd },
+        { ingredient: ingredientToAdd, unit: unitToAdd, amount: amountToAdd },
       ]);
 
       setAmountToAdd(0);
       setUnitToAdd("");
-      setIngredientToAdd("");
+      setIngredientToAdd(undefined);
     } else {
       setAmountToAdd(0);
       setUnitToAdd("");
-      setIngredientToAdd("");
+      setIngredientToAdd(undefined);
     }
   };
 
@@ -95,6 +113,7 @@ const RecipeForm: FC = () => {
   };
 
   const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(formVisible);
     setAmountToAdd(event.target.valueAsNumber);
   };
   const handleUnitChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -103,10 +122,16 @@ const RecipeForm: FC = () => {
   const handleIngredientToAddChange = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
-    setIngredientToAdd(event.target.value);
+    setIngredientToAdd({
+      id: ingredients.find((e) => e.name === event.target.value)?.id,
+      name: event.target.value,
+    });
+  };
+  const handleVisibilityChange = (value: boolean) => {
+    setFormVisible(value);
   };
 
-  const handleInstructionChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInstructionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     console.log(instructions.length);
     setNewInstruction({
       step:
@@ -127,15 +152,55 @@ const RecipeForm: FC = () => {
     }
   };
 
+  const handleFormSubmit = async (ev: FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+    if (
+      formTitle &&
+      formDish &&
+      formCategory &&
+      formDescription &&
+      formPrepTime &&
+      formCookTime &&
+      formServings &&
+      formDiet
+    ) {
+      setFormData({
+        title: formTitle,
+        dish: formDish,
+        category: formCategory,
+        description: formDescription,
+        prepTime: formPrepTime,
+        cookTime: formCookTime,
+        servings: formServings,
+        visible: formVisible,
+        instructions: instructions,
+        recipeIngredients: recipeIngredients,
+        imgUrl: "",
+        diet: formDiet,
+      });
+    }
+
+    if (formData) {
+      const payload = await addNewRecipe(formData);
+      console.log(payload);
+
+      setFormData(undefined);
+    }
+  };
+
   return (
     <div className="">
-      <form className="w-11/12 mx-4 mb-28">
+      <form className="w-11/12 mx-4 mb-28" onSubmit={handleFormSubmit}>
         <section>
           <div>
             <label htmlFor="title">Title</label>
             <input
               className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
               id="title"
+              name="title"
+              onChange={(ev: FormEvent<HTMLInputElement>) => {
+                setFormTitle(ev.currentTarget.value);
+              }}
               required
               placeholder="Title"
               type="text"></input>
@@ -145,13 +210,20 @@ const RecipeForm: FC = () => {
             <input
               className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
               id="dish"
+              name="dish"
+              onChange={(ev: FormEvent<HTMLInputElement>) => {
+                const selectedOption = dishes.find(
+                  (item) => item.name === ev.currentTarget.value
+                );
+                setFormDish(selectedOption);
+              }}
               required
               placeholder="Dish"
               list="dishes"
               type="text"></input>
             <datalist id="dishes">
               {dishes.map((item, index) => (
-                <option key={index} value={item.name} />
+                <option key={index} value={item.name} id={item.id.toString()} />
               ))}
             </datalist>
           </div>
@@ -160,6 +232,13 @@ const RecipeForm: FC = () => {
             <input
               className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
               id="category"
+              name="category"
+              onChange={(ev: FormEvent<HTMLInputElement>) => {
+                const selectedOption = categories.find(
+                  (item) => item.name === ev.currentTarget.value
+                );
+                setFormCategory(selectedOption);
+              }}
               required
               placeholder="Category"
               list="categories"
@@ -175,6 +254,10 @@ const RecipeForm: FC = () => {
             <input
               className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
               id="servings"
+              name="servings"
+              onChange={(ev: FormEvent<HTMLInputElement>) => {
+                setFormServings(parseInt(ev.currentTarget.value));
+              }}
               required
               placeholder="Servings"
               type="number"></input>
@@ -184,6 +267,10 @@ const RecipeForm: FC = () => {
             <input
               className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
               id="prep"
+              name="prepTime"
+              onChange={(ev: FormEvent<HTMLInputElement>) => {
+                setFormPrepTime(parseInt(ev.currentTarget.value));
+              }}
               required
               placeholder="Preperation time"
               type="number"></input>
@@ -193,6 +280,10 @@ const RecipeForm: FC = () => {
             <input
               className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
               id="cook"
+              name="cookTime"
+              onChange={(ev: FormEvent<HTMLInputElement>) => {
+                setFormCookTime(parseInt(ev.currentTarget.value));
+              }}
               required
               placeholder="Coooking time"
               type="number"></input>
@@ -202,6 +293,13 @@ const RecipeForm: FC = () => {
             <input
               className="w-full h-10 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
               id="diet"
+              name="diet"
+              onChange={(ev: FormEvent<HTMLInputElement>) => {
+                const selectedOption = diets.find(
+                  (item) => item.name === ev.currentTarget.value
+                );
+                setFormDiet(selectedOption);
+              }}
               required
               placeholder="Diet"
               list="diets"
@@ -217,6 +315,10 @@ const RecipeForm: FC = () => {
             <textarea
               className="w-full h-24 flex px-4 py-2 bg-slate-200 rounded-lg focus:outline-none"
               id="description"
+              name="description"
+              onChange={(ev: FormEvent<HTMLTextAreaElement>) => {
+                setFormDescription(ev.currentTarget.value);
+              }}
               required
               placeholder="Write a short description about your amazing recipe..."></textarea>
           </div>
@@ -244,7 +346,7 @@ const RecipeForm: FC = () => {
                       {recipeIngredient.unit}
                     </p>
                     <p className="flex w-2/4 font-bold mt-2 ml-4">
-                      {recipeIngredient.ingredient}
+                      {recipeIngredient.ingredient.name}
                     </p>
                     <button
                       className="flex w-8 mt-2 mr-3"
@@ -286,7 +388,7 @@ const RecipeForm: FC = () => {
                 list="ingredients"
                 type="text"
                 onChange={handleIngredientToAddChange}
-                value={ingredientToAdd}></input>
+                value={ingredientToAdd?.name}></input>
               <datalist id="ingredients">
                 {ingredients.map((item, index) => (
                   <option key={index} value={item.name} />
@@ -353,7 +455,6 @@ const RecipeForm: FC = () => {
             <textarea
               className="w-full flex px-4 py-2 mr-2 bg-slate-200 rounded-lg "
               id="instruction"
-              required
               value={newInstruction?.description}
               onChange={handleInstructionChange}
               rows={6}
@@ -378,6 +479,10 @@ const RecipeForm: FC = () => {
             setNewIngredient={setNewIngredient}
           />
         )}
+        <div>
+          <label>Visibility</label>
+          <RadioGroup onChange={handleVisibilityChange} />
+        </div>
 
         <button
           className="flex my-4 mx-auto py-2 px-4 rounded-xl bg-selected text-white shadow-md shadow-gray-400"
