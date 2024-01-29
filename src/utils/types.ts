@@ -93,3 +93,14 @@ export type RegisterCredentials = {
   firstName: string;
   lastName: string;
 };
+
+export type IngredientDto = {
+  amount: number;
+  unit: string;
+  ingredient: string;
+};
+
+export type InstructionDto = {
+  step: string;
+  description: string;
+};

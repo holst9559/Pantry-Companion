@@ -9,10 +9,10 @@ import {
   getRecipesWithIngredients,
 } from "@/services/api";
 import { recipes } from "@/services/testResponse";
+import { fetchDishes } from "@/services/api";
 
 type RecipeResultsProps = {
   ingredients: Ingredient[];
-  pantryIngredients: Ingredient[];
 };
 
 const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
@@ -52,10 +52,7 @@ const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
   }, []);
 
   useEffect(() => {
-    const filterTest = filterRecipesByIngredients(
-      allRecipes,
-      selectedIngredients
-    );
+    const filterTest = filterRecipesByIngredients(recipes, selectedIngredients);
     setFilteredRecipes(filterTest);
   }, [selectedIngredients]);
 

@@ -111,3 +111,69 @@ export async function addNewRecipe(recipe: Recipe) {
     throw new Error("An error occurred while trying to create recipe");
   }
 }
+
+export async function fetchRecipeParams() {
+  try {
+    const [categoriesRes, dishesRes, dietsRes] = await Promise.all([
+      fetch("/api/categories", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      fetch("/api/dishes", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      fetch("/api/diets", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    ]);
+
+    if (categoriesRes != null && dishesRes != null && dietsRes != null) {
+      const categories = await categoriesRes.json();
+      const dishes = await dishesRes.json();
+      const diets = await dietsRes.json();
+
+      return {
+        categories,
+        dishes,
+        diets,
+      };
+    } else {
+      throw new Error(
+        "Failed to fetch one or more categories, dishes, or diets"
+      );
+    }
+  } catch (error) {
+    throw new Error(
+      "An error occurred while trying to fetch categories, dishes, and diets"
+    );
+  }
+}
+
+export async function getNewIngredients(req: string) {
+  try {
+    const res = await fetch("/api/ingredients/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    });
+
+    if (req != null) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw new Error("Failed to fetch one or mroe ingredients");
+    }
+  } catch (error) {
+    throw new Error("An error occurred while trying to fetch ingredients");
+  }
+}

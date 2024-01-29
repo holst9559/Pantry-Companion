@@ -2,6 +2,7 @@ import Footer from "@/components/Footer";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Header from "@/components/Header";
+import RecipeForm from "@/components/RecipeForm";
 
 export default async function NewRecipePage() {
   const jwt = cookies().get("JWT-TOKEN")?.value;
@@ -14,6 +15,7 @@ export default async function NewRecipePage() {
   return (
     <>
       <Header title={title} />
+      <RecipeForm />
       <Footer />
     </>
   );
