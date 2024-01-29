@@ -102,13 +102,13 @@ const RecipeForm: FC = () => {
         { ingredient: ingredientToAdd, unit: unitToAdd, amount: amountToAdd },
       ]);
 
-      setAmountToAdd(0);
+      setAmountToAdd(NaN);
       setUnitToAdd("");
-      setIngredientToAdd(undefined);
+      setIngredientToAdd({ id: NaN, name: "" });
     } else {
-      setAmountToAdd(0);
+      setAmountToAdd(NaN);
       setUnitToAdd("");
-      setIngredientToAdd(undefined);
+      setIngredientToAdd({ id: NaN, name: "" });
     }
   };
 
@@ -127,7 +127,6 @@ const RecipeForm: FC = () => {
   };
 
   const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(formVisible);
     setAmountToAdd(event.target.valueAsNumber);
   };
   const handleUnitChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -146,7 +145,6 @@ const RecipeForm: FC = () => {
   };
 
   const handleInstructionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(instructions.length);
     setNewInstruction({
       step:
         instructions !== undefined && instructions.length
@@ -191,7 +189,7 @@ const RecipeForm: FC = () => {
         recipeIngredients: recipeIngredients,
         imgUrl: imgUrl
           ? imgUrl
-          : "img.freepik.com/premium-photo/vertical-shot-delicious-slice-cheesecake-with-berries_768106-8672.jpg?w=826",
+          : "https://img.freepik.com/premium-photo/vertical-shot-delicious-slice-cheesecake-with-berries_768106-8672.jpg?w=826",
         diet: formDiet,
       });
     }

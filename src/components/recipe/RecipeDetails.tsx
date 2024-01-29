@@ -34,7 +34,7 @@ const RecipeDetails: FC<RecipeDetailsProp> = ({ params }) => {
             width={350}
             className="w-full h-40 object-cover"
           />
-          <div className="w-11/12 mx-4 mt-2">
+          <div className="w-11/12 mx-4 mt-2 mb-40">
             <section className="flex justify-start gap-12">
               <div className="text-gray-500 font-medium text-l">
                 <p>Servings:</p>
@@ -49,23 +49,27 @@ const RecipeDetails: FC<RecipeDetailsProp> = ({ params }) => {
             </section>
             <section className="mt-2">
               <h2 className="text-lg text-selected font-bold">Ingredients</h2>
-              {recipeDetails.recipeIngredients.map((ingredient) => (
-                <div className="flex gap-2">
-                  <p className="font-bold">{ingredient.amount}</p>
-                  <p>{ingredient.unit.name}</p>
-                  <p>{ingredient.ingredientName}</p>
-                </div>
-              ))}
+              {recipeDetails.recipeIngredients
+                .sort((a, b) => b.amount - a.amount)
+                .map((ingredient) => (
+                  <div className="flex gap-2" key={ingredient.id}>
+                    <p className="font-bold">{ingredient.amount}</p>
+                    <p>{ingredient.unit.name}</p>
+                    <p>{ingredient.ingredientName}</p>
+                  </div>
+                ))}
             </section>
 
             <section className="mt-4">
               <h2 className="text-lg text-selected font-bold">Step-by-step</h2>
-              {recipeDetails.instructions.map((instruciton) => (
-                <div className="flex my-2">
-                  <p className="font-bold">{instruciton.step}.</p>
-                  <p>{instruciton.description}</p>
-                </div>
-              ))}
+              {recipeDetails.instructions
+                .sort((a, b) => parseInt(a.step) - parseInt(b.step))
+                .map((instruciton) => (
+                  <div className="flex my-2">
+                    <p className="font-bold">{instruciton.step}.</p>
+                    <p>{instruciton.description}</p>
+                  </div>
+                ))}
             </section>
           </div>
         </>
