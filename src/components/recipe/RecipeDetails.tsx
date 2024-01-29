@@ -32,34 +32,42 @@ const RecipeDetails: FC<RecipeDetailsProp> = ({ params }) => {
             alt={recipeDetails.title}
             height={350}
             width={350}
-            className="w-full h-40 absolute object-cover"
+            className="w-full h-40 object-cover"
           />
-          <section>
-            <p>Portions: {recipeDetails.servings}</p>
-            <p>Preperation time: {recipeDetails.prepTime} minutes</p>
-            <p>Cooking time: {recipeDetails.cookTime} minutes</p>
-          </section>
-          <section>
-            <h2>Ingredients</h2>
-            {recipeDetails.recipeIngredients.map((ingredient) => (
-              <div>
-                <p>{ingredient.amount}</p>
-                <p>{ingredient.unit.name}</p>
-                <p>{ingredient.ingredientName}</p>
+          <div className="w-11/12 mx-4 mt-2">
+            <section className="flex justify-start gap-12">
+              <div className="text-gray-500 font-medium text-l">
+                <p>Servings:</p>
+                <p>Preperation time:</p>
+                <p>Cooking time:</p>
               </div>
-            ))}
-          </section>
+              <div className="font-medium text-l">
+                <p>{recipeDetails.servings} servings</p>
+                <p>{recipeDetails.prepTime} minutes</p>
+                <p>{recipeDetails.cookTime} minutes</p>
+              </div>
+            </section>
+            <section className="mt-2">
+              <h2 className="text-lg text-selected font-bold">Ingredients</h2>
+              {recipeDetails.recipeIngredients.map((ingredient) => (
+                <div className="flex gap-2">
+                  <p className="font-bold">{ingredient.amount}</p>
+                  <p>{ingredient.unit.name}</p>
+                  <p>{ingredient.ingredientName}</p>
+                </div>
+              ))}
+            </section>
 
-          <section>
-            <h2>Step-by-step</h2>
-            {recipeDetails.instructions.map((instruciton) => (
-              <div>
-                <p>{instruciton.step}</p>
-                <p>{instruciton.description}</p>
-              </div>
-            ))}
-          </section>
-          <div></div>
+            <section className="mt-4">
+              <h2 className="text-lg text-selected font-bold">Step-by-step</h2>
+              {recipeDetails.instructions.map((instruciton) => (
+                <div className="flex my-2">
+                  <p className="font-bold">{instruciton.step}.</p>
+                  <p>{instruciton.description}</p>
+                </div>
+              ))}
+            </section>
+          </div>
         </>
       )}
     </>

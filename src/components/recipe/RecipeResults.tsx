@@ -61,7 +61,7 @@ const RecipeResults: FC<RecipeResultsProps> = ({ ingredients }) => {
         setSelectedIngredients={setSelectedIngredients}
       />
       <section className="flex flex-col">
-        <ul className="flex flex-row gap-4 justify-center mt-4">
+        <ul className="flex flex-row flex-wrap gap-4 justify-center mt-4">
           {filteredRecipes?.map((recipe) => (
             <RecipeCard key={recipe.id} recipe={recipe}></RecipeCard>
           ))}

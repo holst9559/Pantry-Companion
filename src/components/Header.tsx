@@ -12,7 +12,7 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ title }) => {
   return (
     <header className="sticky pt-1 top-0 bg-container h-20 border-b-2 border-selected">
-      <div className="flex justify-between items-center gap-4 container mx-auto px-4 my-4 max-w-6xl border-b-2 border-white border-opacity-10 bg-transparent">
+      <div className="flex justify-between items-center gap-4 container mx-auto px-4 my-4 max-w-6xl border-b-2 border-white border-opacity-10">
         <Link href="#" onClick={() => history.go(-1)}>
           <Image
             src={goback_icon}

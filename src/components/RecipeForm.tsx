@@ -13,6 +13,7 @@ import {
   IngredientDto,
   Instruction,
   InstructionDto,
+  Recipe,
   RecipeDto,
   RecipeIngredientDto,
 } from "@/utils/types";
@@ -22,6 +23,7 @@ import edit_icon from "../../public/edit_icon.svg";
 import delete_icon from "../../public/delete_icon.svg";
 import NewIngredientModal from "./recipe/NewIngredientModal";
 import RadioGroup from "./RadioGroup";
+import SuccessModal from "./SuccessModal";
 
 const RecipeForm: FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -29,16 +31,16 @@ const RecipeForm: FC = () => {
   const [diets, setDiets] = useState<Diet[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [showModal, setShowModal] = useState<Boolean>(false);
-
+  const [successModal, setSuccessModal] = useState<Boolean>(false);
   const [amountToAdd, setAmountToAdd] = useState<number>();
   const [unitToAdd, setUnitToAdd] = useState<string>();
   const [ingredientToAdd, setIngredientToAdd] = useState<Ingredient>();
   const [newIngredient, setNewIngredient] = useState<Ingredient>();
-
+  const [createResponse, setCreateResponse] = useState<Recipe>();
   const [newInstruction, setNewInstruction] = useState<
     InstructionDto | undefined
   >();
-
+  const [imgUrl, setImgUrl] = useState<string>();
   const [formData, setFormData] = useState<RecipeDto>();
   const [formTitle, setFormTitle] = useState<string>();
   const [formDish, setFormDish] = useState<Dish>();
@@ -73,6 +75,18 @@ const RecipeForm: FC = () => {
       setNewIngredient(undefined);
     }
   }, [newIngredient]);
+
+  useEffect(() => {
+    const submitForm = async () => {
+      if (formData) {
+        const payload = await addNewRecipe(formData);
+        setCreateResponse(payload);
+        setSuccessModal(true);
+      }
+    };
+
+    submitForm();
+  }, [formData]);
 
   const handleNewIngredient = () => {
     if (
@@ -175,16 +189,11 @@ const RecipeForm: FC = () => {
         visible: formVisible,
         instructions: instructions,
         recipeIngredients: recipeIngredients,
-        imgUrl: "",
+        imgUrl: imgUrl
+          ? imgUrl
+          : "img.freepik.com/premium-photo/vertical-shot-delicious-slice-cheesecake-with-berries_768106-8672.jpg?w=826",
         diet: formDiet,
       });
-    }
-
-    if (formData) {
-      const payload = await addNewRecipe(formData);
-      console.log(payload);
-
-      setFormData(undefined);
     }
   };
 
@@ -430,7 +439,7 @@ const RecipeForm: FC = () => {
                 {item.step}
               </p>
               <textarea
-                className="w-full flex px-4 py-2 mr-2 bg-slate-200 rounded-lg opacity-80 shadow-md shadow-slate-300"
+                className="w-full flex px-4 py-2 mr-2 bg-slate-200 rounded-lg text-selected shadow-md shadow-slate-300"
                 rows={6}
                 disabled>
                 {item.description}
@@ -485,6 +494,8 @@ const RecipeForm: FC = () => {
             setNewIngredient={setNewIngredient}
           />
         )}
+
+        {successModal && <SuccessModal createResponse={createResponse} />}
         <div className="flex flex-col mt-4">
           <label className="flex justify-center text-lg font-medium">
             Visibility
