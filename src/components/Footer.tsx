@@ -9,7 +9,7 @@ import settings_icon from "../../public/settings_icon.svg";
 
 const Footer: FC = () => {
   return (
-    <footer className="fixed bottom-0 w-screen bg-container border-t border-selected ">
+    <footer className="fixed bottom-0 w-screen bg-container border-t border-selected">
       <nav>
         <ul className="flex justify-between items-center gap-4 container mx-auto px-4 my-2 max-w-6xl border-b-2 border-white border-opacity-10">
           <li>

@@ -1,8 +1,7 @@
-import { recipes } from "@/services/testResponse";
 import RecipeDetails from "@/components/recipe/RecipeDetails";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getRecipeById } from "@/services/api";
+import Footer from "@/components/Footer";
 
 type RecipeDetailsPageProps = {
   params: { id: number };
@@ -22,6 +21,7 @@ export default async function RecipeDetailsPage({
     <>
       <div>
         <RecipeDetails params={params} />
+        <Footer />
       </div>
     </>
   );

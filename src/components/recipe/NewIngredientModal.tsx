@@ -105,6 +105,7 @@ const NewIngredientModal: FC<NewIngredientModalProps> = ({
         <div className="text-center mt-4">
           <button
             onClick={() => setShowModal(false)}
+            type="button"
             className="bg-transparent border border-primary text-primary py-2 px-4 rounded-lg font-medium">
             Close
           </button>
